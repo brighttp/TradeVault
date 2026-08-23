@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  web:
+    # Membangun image dari Dockerfile di direktori saat ini
+    build:
+      context: .
+      dockerfile: Dockerfile
+    
+    # Mapping port 3000 di host ke port 3000 di container
+    ports:
+      - "3000:3000"
+    
+    # Mapping direktori proyek lokal ke direktori /app di dalam container
+    # Volume anonim untuk node_modules memastikan node_modules di dalam container 
+    # tidak tertimpa oleh folder node_modules dari host OS
+    volumes:
+      - .:/app
+      - /app/node_modules
+      - /app/.next
+    
+    # Menambahkan environment variables
+    environment:
+      - NODE_ENV=development
+      # Bermanfaat jika hot-reloading tidak berfungsi di lingkungan Windows/WSL
+      - WATCHPACK_POLLING=true
+
+    # Agar terminal interaktif (opsional, berguna untuk debug)
+    stdin_open: true
+    tty: true
