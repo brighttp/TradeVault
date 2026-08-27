@@ -2,46 +2,44 @@
 
 import { Line, LineChart, ResponsiveContainer, Tooltip, XAxis, YAxis } from "recharts";
 
-const data = [
-  { date: "Jan 01", pnl: 0 },
-  { date: "Jan 05", pnl: 120 },
-  { date: "Jan 10", pnl: 80 },
-  { date: "Jan 15", pnl: 350 },
-  { date: "Jan 20", pnl: 310 },
-  { date: "Jan 25", pnl: 550 },
-  { date: "Jan 30", pnl: 890 },
-];
+type ChartData = {
+  date: string;
+  pnl: number;
+};
 
-export function PnlChart() {
+export function PnlChart({ data }: { data: ChartData[] }) {
+  // Add a fallback if data is empty so the chart doesn't crash
+  const chartData = data && data.length > 0 ? data : [{ date: "No Data", pnl: 0 }];
+
   return (
     <div className="h-[300px] w-full mt-4">
       <ResponsiveContainer width="100%" height="100%">
-        <LineChart data={data} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
+        <LineChart data={chartData} margin={{ top: 5, right: 10, left: -20, bottom: 0 }}>
           <XAxis 
             dataKey="date" 
-            stroke="#525252" 
+            stroke="#E5E5E5" 
             fontSize={12} 
             tickLine={false} 
             axisLine={false} 
           />
           <YAxis 
-            stroke="#525252" 
+            stroke="#E5E5E5" 
             fontSize={12} 
             tickLine={false} 
             axisLine={false} 
             tickFormatter={(value) => `$${value}`}
           />
           <Tooltip 
-            contentStyle={{ backgroundColor: "#171717", border: "1px solid #262626", borderRadius: "6px" }}
-            itemStyle={{ color: "#22c55e" }}
+            contentStyle={{ backgroundColor: "#14213D", border: "1px solid rgba(252, 163, 17, 0.2)", borderRadius: "6px" }}
+            itemStyle={{ color: "#FCA311" }}
           />
           <Line 
             type="monotone" 
             dataKey="pnl" 
-            stroke="#22c55e" 
+            stroke="#FCA311" 
             strokeWidth={2} 
             dot={false}
-            activeDot={{ r: 4, fill: "#22c55e" }}
+            activeDot={{ r: 4, fill: "#FCA311" }}
           />
         </LineChart>
       </ResponsiveContainer>

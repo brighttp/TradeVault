@@ -1,8 +1,6 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import { Geist, Geist_Mono, Hanken_Grotesk } from "next/font/google";
 import "./globals.css";
-import Link from "next/link";
-import { LayoutDashboard, LineChart, ListTree, Settings } from "lucide-react";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -14,8 +12,13 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+const hankenGrotesk = Hanken_Grotesk({
+  variable: "--font-hanken-grotesk",
+  subsets: ["latin"],
+});
+
 export const metadata: Metadata = {
-  title: "TradeVault",
+  title: "TradeVault - Crypto Trading Dashboard",
   description: "Automated OKX Futures Trading Journal",
 };
 
@@ -27,44 +30,13 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased dark`}
+      className={`${geistSans.variable} ${geistMono.variable} ${hankenGrotesk.variable} h-full antialiased dark`}
     >
-      <body className="flex h-screen overflow-hidden bg-background text-foreground">
-        
-        {/* Sidebar */}
-        <aside className="w-64 border-r border-border bg-card flex flex-col">
-          <div className="p-6 border-b border-border">
-            <h1 className="text-xl font-bold tracking-tight">TradeVault.</h1>
-          </div>
-          <nav className="flex-1 p-4 space-y-2">
-            <Link href="/dashboard" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors">
-              <LayoutDashboard className="w-4 h-4" />
-              Dashboard
-            </Link>
-            <Link href="/trades" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors">
-              <ListTree className="w-4 h-4" />
-              Trades
-            </Link>
-            <Link href="/analytics" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors">
-              <LineChart className="w-4 h-4" />
-              Analytics
-            </Link>
-          </nav>
-          <div className="p-4 border-t border-border">
-            <Link href="/settings" className="flex items-center gap-3 px-3 py-2 text-sm font-medium rounded-md hover:bg-accent hover:text-accent-foreground text-muted-foreground transition-colors">
-              <Settings className="w-4 h-4" />
-              Settings
-            </Link>
-          </div>
-        </aside>
-
-        {/* Main Content */}
-        <main className="flex-1 overflow-y-auto">
-          <div className="h-full p-8">
-            {children}
-          </div>
-        </main>
-        
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap" rel="stylesheet" />
+      </head>
+      <body className="min-h-screen flex flex-col font-body-md bg-brand-black text-brand-white">
+        {children}
       </body>
     </html>
   );

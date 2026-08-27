@@ -7,6 +7,7 @@ export interface OkxCredentials {
 }
 
 export class OkxClient {
+  // Reverting to www.okx.com since ISP blocks SNI for all OKX domains
   private baseUrl = 'https://www.okx.com';
 
   constructor(private creds: OkxCredentials) {}
@@ -49,13 +50,13 @@ export class OkxClient {
     return data.data as T;
   }
 
-  // Fetch Open Positions (e.g. SWAP / Futures)
+  // Fetch Open Positions (All Instrument Types)
   async getOpenPositions() {
-    return this.request('GET', '/api/v5/account/positions?instType=SWAP');
+    return this.request('GET', '/api/v5/account/positions');
   }
 
-  // Fetch Closed Positions (History)
+  // Fetch Closed Positions (History for All Instrument Types)
   async getPositionsHistory() {
-    return this.request('GET', '/api/v5/account/positions/history?instType=SWAP');
+    return this.request('GET', '/api/v5/account/positions-history');
   }
 }
