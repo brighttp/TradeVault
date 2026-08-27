@@ -42,8 +42,13 @@ export async function syncOkxTrades() {
     ]);
 
     // Handle potential array wrapping based on V5 API standard
-    const openPositions: any[] = Array.isArray(openRes) ? openRes : [];
-    const closedPositions: any[] = Array.isArray(closedRes) ? closedRes : [];
+    let openPositions: any[] = Array.isArray(openRes) ? openRes : [];
+    let closedPositions: any[] = Array.isArray(closedRes) ? closedRes : [];
+
+    // Option 1: Filter out all trades created before today (Aug 27, 2026) to start fresh
+    const CUTOFF_TIMESTAMP = new Date("2026-08-27T00:00:00Z").getTime();
+    openPositions = openPositions.filter(pos => parseInt(pos.cTime) >= CUTOFF_TIMESTAMP);
+    closedPositions = closedPositions.filter(pos => parseInt(pos.cTime) >= CUTOFF_TIMESTAMP);
 
     // DEBUG: Write raw response to file for inspection
     try {
