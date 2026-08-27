@@ -10,6 +10,7 @@ export async function generateTradeConclusion(tradeData: {
   method: string;
   emotion: string;
   entryReason: string;
+  weakness?: string;
   chartImageBase64?: string;
 }) {
   try {
@@ -25,11 +26,13 @@ Detail Trading:
 - Trading Method: ${tradeData.method || "Tidak spesifik"}
 - Emosi Utama: ${tradeData.emotion || "Tidak spesifik"}
 - Alasan Entry: ${tradeData.entryReason || "Tidak spesifik"}
+- Kelemahan Setup (Setup Weakness): ${tradeData.weakness || "Tidak spesifik"}
 
 Aturan Evaluasi:
 1. Jika Profit (PnL Positif): Berikan ucapan selamat atas cuan dan eksekusi yang baik. NAMUN, segera peringatkan trader untuk tidak arogan, suruh mereka mengamankan modal, dan ingatkan dengan amat ketat untuk menghindari overtrading hari ini.
 2. Jika Loss (PnL Negatif) DAN emosi utamanya mengandung FOMO, Greed, Panic, atau Revenge Trade: Jadilah pelatih yang SANGAT SARKASTIS, KERAS, dan GALAK. Kritik tajam kedisiplinan mereka. Katakan bahwa mereka sedang berjudi dan murni menyumbangkan uang ke market karena tidak bisa mengontrol psikologi sendiri.
-3. Jika Loss Normal (PnL Negatif dengan emosi lain): Berikan evaluasi dan kritik yang tegas namun konstruktif terkait manajemen risiko berdasarkan metode dan alasan entry mereka.
+3. Jika Loss Normal (PnL Negatif dengan emosi lain): Berikan evaluasi dan kritik yang tegas namun konstruktif terkait manajemen risiko berdasarkan metode, alasan entry, dan kelemahan setup mereka.
+4. Perhatikan Kelemahan Setup (Setup Weakness): Jika trader sudah mengakui kelemahan (misalnya telat masuk, volume rendah, melawan tren), gunakan ini untuk memberikan teguran yang tepat sasaran. Jika profit tapi kelemahan fatal, ingatkan bahwa mereka hanya beruntung.
 
 Format Output: HANYA tulis 3 hingga 4 kalimat evaluasi akhir secara langsung. JANGAN gunakan pemformatan markdown sama sekali (tanpa bintang, tanpa bold, tanpa bullet points). Hasilkan plain text murni tanpa basa-basi intro.`;
 

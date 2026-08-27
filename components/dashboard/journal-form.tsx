@@ -9,11 +9,13 @@ import { Brain, CheckCircle2, Sparkles, Loader2 } from "lucide-react";
 export function JournalForm({ tradeId, initialData, tradeSymbol, tradePnl }: { tradeId: string, initialData?: any, tradeSymbol: string, tradePnl: number }) {
   let initialUser = initialData?.conclusion || "";
   let initialAi = "";
+  let initialWeakness = "";
   try {
     if (initialData?.conclusion?.startsWith("{")) {
       const parsed = JSON.parse(initialData.conclusion);
       initialUser = parsed.user || "";
       initialAi = parsed.ai || "";
+      initialWeakness = parsed.weakness || "";
     }
   } catch(e) {}
 
@@ -22,6 +24,7 @@ export function JournalForm({ tradeId, initialData, tradeSymbol, tradePnl }: { t
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
   const [confidence, setConfidence] = useState<number>(initialData?.confidence || 3);
+  const [weakness, setWeakness] = useState(initialWeakness);
   const [conclusion, setConclusion] = useState(initialUser);
   const [aiConclusion, setAiConclusion] = useState(initialAi);
   const router = useRouter();
@@ -37,7 +40,8 @@ export function JournalForm({ tradeId, initialData, tradeSymbol, tradePnl }: { t
     // Combine both conclusions into a JSON string to avoid DB migrations
     const combinedConclusion = JSON.stringify({
       user: conclusion,
-      ai: aiConclusion
+      ai: aiConclusion,
+      weakness: weakness
     });
     formData.append("conclusion", combinedConclusion);
     
@@ -60,8 +64,8 @@ export function JournalForm({ tradeId, initialData, tradeSymbol, tradePnl }: { t
     const emotion = (document.querySelector('select[name="emotion"]') as HTMLSelectElement)?.value || "";
     const entryReason = (document.querySelector('input[name="reason"]') as HTMLInputElement)?.value || "";
 
-    if (!method || !emotion || !entryReason) {
-      setError("Please fill in Trading Method, Primary Emotion, and Entry Reason first.");
+    if (!method || !emotion || !entryReason || !weakness) {
+      setError("Please fill in Trading Method, Primary Emotion, Entry Reason, and Setup Weakness first.");
       return;
     }
 
@@ -91,6 +95,7 @@ export function JournalForm({ tradeId, initialData, tradeSymbol, tradePnl }: { t
       method,
       emotion,
       entryReason,
+      weakness,
       chartImageBase64
     });
 
@@ -182,6 +187,19 @@ export function JournalForm({ tradeId, initialData, tradeSymbol, tradePnl }: { t
           placeholder="e.g. Broken 4H support block with high volume" 
           required 
           defaultValue={initialData?.reason || ""}
+          className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-sm text-white placeholder:text-white/30 focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-all outline-none" 
+        />
+      </div>
+      
+      <div className="flex flex-col gap-2 mt-2">
+        <label className="text-xs text-gray-500 uppercase tracking-widest">Setup Weakness</label>
+        <input 
+          name="weakness"
+          type="text" 
+          placeholder="e.g. Volume was dropping, entered too early" 
+          required
+          value={weakness}
+          onChange={(e) => setWeakness(e.target.value)}
           className="w-full bg-white/5 border border-white/10 rounded-lg p-3 text-sm text-white placeholder:text-white/30 focus:border-amber-500 focus:ring-1 focus:ring-amber-500/50 transition-all outline-none" 
         />
       </div>
