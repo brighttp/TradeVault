@@ -9,7 +9,11 @@ export function CompletedTradesTable({ trades }: { trades: any[] }) {
 
   const filteredTrades = trades.filter(pos => {
     // Status Filter
-    if (statusFilter !== "ALL" && pos.journal_status !== statusFilter) return false;
+    if (statusFilter !== "ALL") {
+      const isComplete = pos.journal_status === "COMPLETE";
+      if (statusFilter === "INCOMPLETE" && isComplete) return false;
+      if (statusFilter === "COMPLETE" && !isComplete) return false;
+    }
 
     // Time Filter
     if (timeFilter !== "ALL") {
@@ -93,14 +97,14 @@ export function CompletedTradesTable({ trades }: { trades: any[] }) {
                     {dateClosed}
                   </td>
                   <td className="py-3 px-4">
-                    {pos.journal_status === "INCOMPLETE" ? (
+                    {pos.journal_status !== "COMPLETE" ? (
                       <span className="bg-primary-container/10 text-primary-container font-label-caps text-[10px] px-2 py-1 rounded whitespace-nowrap">CONCLUSION NEEDED</span>
                     ) : (
                       <span className="bg-success-emerald/10 text-success-emerald font-label-caps text-[10px] px-2 py-1 rounded whitespace-nowrap">COMPLETED</span>
                     )}
                   </td>
                   <td className="py-3 px-4 text-right">
-                    {pos.journal_status === "INCOMPLETE" ? (
+                    {pos.journal_status !== "COMPLETE" ? (
                       <Link href={`/trades/${pos.id}`} className="border border-primary/50 text-primary hover:bg-primary-container hover:text-surface-obsidian font-label-caps text-[10px] px-3 py-1.5 rounded transition-all inline-flex items-center gap-1 whitespace-nowrap">
                         CONCLUSION <span className="material-symbols-outlined text-[12px]">arrow_forward</span>
                       </Link>

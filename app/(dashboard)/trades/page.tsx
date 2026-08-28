@@ -89,13 +89,13 @@ export default async function TradesPage() {
                   </div>
 
                   <div className="flex justify-between items-center relative z-10 border-t border-white/5 pt-sm">
-                    {pos.journal_status === "INCOMPLETE" ? (
+                    {pos.journal_status !== "COMPLETE" ? (
                       <span className="border border-outline-variant text-gray-400 font-label-caps text-[10px] px-xs py-1 rounded uppercase">Review Needed</span>
                     ) : (
                       <span className="border border-success-emerald/30 text-success-emerald font-label-caps text-[10px] px-xs py-1 rounded uppercase">Completed</span>
                     )}
                     
-                    {pos.journal_status === "INCOMPLETE" ? (
+                    {pos.journal_status !== "COMPLETE" ? (
                       <Link href={`/trades/${pos.id}`} className="bg-gradient-to-r from-primary-container to-secondary-container text-surface-obsidian font-label-caps text-label-caps px-sm py-2 rounded-md hover:shadow-[0_0_15px_rgba(252,163,17,0.4)] transition-all flex items-center gap-1 uppercase">
                         REVIEW <span className="material-symbols-outlined text-[14px]">arrow_forward</span>
                       </Link>
