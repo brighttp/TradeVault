@@ -2,13 +2,15 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import Image from "next/image";
 
 export function Sidebar() {
   const pathname = usePathname();
 
   return (
     <nav className="hidden md:flex flex-col h-screen w-64 fixed left-0 top-0 bg-surface-obsidian/90 backdrop-blur-2xl text-primary border-r border-outline-variant/20 shadow-[20px_0_50px_rgba(0,0,0,0.5)] py-panel-padding z-50">
-      <div className="px-md mb-xl">
+      <div className="px-md mb-xl flex items-center gap-2">
+        <Image src="/logo.png" alt="TradeVault Logo" width={32} height={32} className="rounded-md" />
         <h1 className="font-headline-md text-headline-md text-primary uppercase tracking-widest">TRADEVAULT</h1>
       </div>
       <ul className="flex-1 space-y-2 px-sm flex flex-col">
