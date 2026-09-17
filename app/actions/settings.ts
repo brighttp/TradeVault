@@ -35,3 +35,29 @@ export async function saveOkxCredentials(formData: FormData) {
   revalidatePath("/settings");
   return { success: true };
 }
+
+export async function resetTradingData() {
+  const supabase = await createClient();
+  const { data: { user } } = await supabase.auth.getUser();
+
+  if (!user) {
+    return { error: "Not authenticated. Please log in first." };
+  }
+
+  const { error } = await supabase
+    .from('trades')
+    .delete()
+    .eq('user_id', user.id);
+
+  if (error) {
+    return { error: error.message };
+  }
+
+  // Revalidate relevant paths
+  revalidatePath("/dashboard");
+  revalidatePath("/trades");
+  revalidatePath("/analytics");
+  revalidatePath("/settings");
+  
+  return { success: true };
+}
