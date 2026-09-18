@@ -53,6 +53,13 @@ export async function resetTradingData() {
     return { error: error.message };
   }
 
+  // Update last_reset_at timestamp in user_settings
+  const now = new Date().toISOString();
+  await supabase
+    .from('user_settings')
+    .update({ last_reset_at: now })
+    .eq('user_id', user.id);
+
   // Revalidate relevant paths
   revalidatePath("/dashboard");
   revalidatePath("/trades");

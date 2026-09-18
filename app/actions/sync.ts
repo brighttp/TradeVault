@@ -45,10 +45,22 @@ export async function syncOkxTrades() {
     let openPositions: any[] = Array.isArray(openRes) ? openRes : [];
     let closedPositions: any[] = Array.isArray(closedRes) ? closedRes : [];
 
-    // Filter out all CLOSED trades created before today (Aug 27, 2026) to start fresh.
+    // Fetch user settings to determine the cutoff timestamp based on the last reset
+    const { data: userSettings } = await supabase
+      .from('user_settings')
+      .select('last_reset_at')
+      .eq('user_id', user.id)
+      .single();
+
+    // Default cutoff to Aug 27, 2026 if no reset has occurred
+    const defaultCutoff = new Date("2026-08-27T00:00:00Z").getTime();
+    const CUTOFF_TIMESTAMP = userSettings?.last_reset_at 
+      ? new Date(userSettings.last_reset_at).getTime() 
+      : defaultCutoff;
+
+    // Filter out all CLOSED trades created before the cutoff date to start fresh or avoid deleted data.
     // We intentionally do NOT filter openPositions, because an open trade is still active 
     // even if it was opened before the cutoff date.
-    const CUTOFF_TIMESTAMP = new Date("2026-08-27T00:00:00Z").getTime();
     closedPositions = closedPositions.filter(pos => parseInt(pos.uTime || pos.cTime) >= CUTOFF_TIMESTAMP);
 
     // DEBUG: Write raw response to file for inspection
