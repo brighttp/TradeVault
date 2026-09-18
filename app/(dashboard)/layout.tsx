@@ -6,12 +6,12 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <div className="flex h-screen w-full overflow-hidden">
+    <div className="flex h-dvh w-full overflow-hidden">
       {/* SideNavBar (Shared Component) */}
       <Sidebar />
 
       {/* Main Canvas */}
-      <main className="flex-1 flex flex-col md:ml-64 h-screen overflow-y-auto w-full relative z-10">
+      <main className="flex-1 flex flex-col md:ml-64 h-dvh overflow-y-auto w-full relative z-10">
         
         {/* Children Content */}
         {children}
