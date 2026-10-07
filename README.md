@@ -1,36 +1,32 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# 🏦 TradeVault - AI-Powered Trading Journal
 
-## Getting Started
+TradeVault is an institutional-grade, full-stack cryptocurrency trading journal designed to track, analyze, and evaluate trading performance. Built with a focus on seamless user experience, it integrates real-time exchange data and leverages advanced Generative AI to act as a personalized trading psychology coach.
 
-First, run the development server:
+## ✨ Key Features
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+*   **Automated Trade Synchronization:** Seamlessly fetches real-time execution telemetry and trade history directly via the **OKX API**, eliminating manual data entry.
+*   **AI Trading Coach (Gemini Integration):** Utilizes the **Google Gemini API** (Multimodal) to analyze post-trade data, PnL, emotional state, and uploaded chart screenshots. The AI provides objective, strict, and constructive feedback based on a customized institutional trading persona.
+*   **Secure Authentication & Database:** Powered by **Supabase** with robust Row Level Security (RLS) to ensure user data and trading journals are entirely private and secure.
+*   **Premium Institutional UI:** Features a dark-themed, highly responsive user interface with modern toast notifications (Sonner) for an immersive and professional experience.
+*   **Edge-Optimized Architecture:** Deployed on **Vercel** utilizing Next.js Server Actions to keep API keys hidden and ensure fast, secure backend executions without CORS issues.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🛠️ Tech Stack
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+*   **Framework:** [Next.js](https://nextjs.org/) (App Router & Server Actions)
+*   **Database & Auth:** [Supabase](https://supabase.com/) (PostgreSQL)
+*   **AI Engine:** [@google/generative-ai](https://www.npmjs.com/package/@google/generative-ai) (Gemini 1.5 Flash/Pro)
+*   **External API:** OKX REST API
+*   **Styling:** Tailwind CSS
+*   **Deployment:** Vercel
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🚀 Getting Started
 
-## Learn More
+### Prerequisites
+Make sure you have Node.js installed and an active account on Supabase, Google AI Studio, and OKX.
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/brighttp/TradeVault.git](https://github.com/brighttp/TradeVault.git)
+   cd TradeVault
